@@ -2,7 +2,7 @@
 
 A Brainfuck VM written in Go for funsies
 
-## Project Setup
+## Setup
 
 ` go get github.com/adamveld12/gofuck `
 
@@ -14,7 +14,7 @@ This also works with `go test ./vm`
 
 ## How to use
 
-```
+``` go
 import (
   "fmt"
   "github.com/adamveld12/gofuck/vm"
@@ -27,6 +27,20 @@ func main(){
    fmt.Println(<-output)
 }
 ```
+
+You can also go install it and use this at the command line like so:
+
+``` sh
+ $ gofuck <file>
+```
+
+or
+
+``` sh
+ $ gofuck
+ $ <type or paste BF code here>
+```
+and on new line the code is executed and the output printed
 
 ## Contributing changes
 
