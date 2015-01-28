@@ -42,6 +42,11 @@ or
 ```
 and on new line the code is executed and the output printed
 
+To for something really cool, try out
+``` sh
+  go run main.go mandelbrot.b
+```
+
 ## Contributing changes
 
 - [Git Guildines](https://github.com/thoughtbot/guides/tree/master/protocol/git)
