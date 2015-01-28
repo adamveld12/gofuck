@@ -28,24 +28,25 @@ func main(){
 }
 ```
 
-You can also go install it and use this at the command line like so:
+You can use `go install` and use the CLI like so:
 
 ``` sh
  $ gofuck <file>
 ```
-
 or
 
 ``` sh
  $ gofuck
  $ <type or paste BF code here>
 ```
-and on new line the code is executed and the output printed
 
-To for something really cool, try out
+And for something pretty cool:
 ``` sh
-  go run main.go mandelbrot.b
+ $ gofuck mandelbrot.b
 ```
+
+
+For something really cool, try out:
 
 ## Contributing changes
 

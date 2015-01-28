@@ -13,7 +13,6 @@ func main() {
 	var program string
 
 	if len(os.Args) <= 1 {
-		fmt.Println(os.Args)
 		reader := bufio.NewReader(os.Stdin)
 		line, _, err := reader.ReadLine()
 		if err != nil {
