@@ -56,14 +56,20 @@ func TestForeignCharacters(t *testing.T) {
 
 func TestLoop(t *testing.T) {
 	Convey("When looping", t, func() {
-		program := "++++++[>++++++++++<-]>+++++."
 		Convey("Output should be 'A'", func() {
+			program := "++++++[>++++++++++<-]>+++++."
 			_, output := Execute(program)
 			result := <-output
 			So(result, ShouldEqual, 'A')
 		})
+		Convey("Output should be Hello World", func() {
+			program := "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.,+[-.[-]-,+]."
+			_, output := Execute(program)
+			result := ""
+			for range "hello world" {
+				result += string(<-output)
+			}
+			So(result, ShouldEqual, "Hello World")
+		})
 	})
-}
-
-func TestOutput(t *testing.T) {
 }

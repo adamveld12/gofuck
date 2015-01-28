@@ -14,7 +14,6 @@ func main() {
 
 	if len(os.Args) <= 1 {
 		fmt.Println(os.Args)
-		// maybe support REPL
 		reader := bufio.NewReader(os.Stdin)
 		line, _, err := reader.ReadLine()
 		if err != nil {
@@ -44,7 +43,7 @@ func reader(input chan<- rune) {
 
 func printer(output <-chan rune) {
 	for {
-		fmt.Print(<-output)
+		fmt.Print(string(<-output))
 	}
 }
 

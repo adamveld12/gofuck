@@ -1,5 +1,7 @@
 package vm
 
+import _ "log"
+
 const MEM_SIZE int = 30000
 
 func Execute(program string) (chan<- rune, <-chan rune) {
@@ -14,7 +16,7 @@ func Execute(program string) (chan<- rune, <-chan rune) {
 	go func() {
 		defer close(input)
 		defer close(output)
-		// sanitize input
+
 		for instructionPtr < instructionsLen {
 			switch program[instructionPtr] {
 			case '+': // Increments the value at the current cell by one.
@@ -29,23 +31,40 @@ func Execute(program string) (chan<- rune, <-chan rune) {
 				output <- rune(memory[dataPtr])
 			case ',': // Reads a single input character into the current cell.
 				memory[dataPtr] = int(<-input)
-			case '[': // If the value at the current cell is zero, skips to the corresponding ].
-				if memory[dataPtr] == 0 {
-					// skip to ]
-					for program[instructionPtr] != ']' {
+			case '[': // If the value at the current cell is zero, skips to the corresponding ]
+				// Otherwise, move to the next instruction.
+				value := memory[dataPtr]
+				if value == 0 {
+					nestDepth := 1
+					for nestDepth > 0 {
 						instructionPtr++
+						symbol := program[instructionPtr]
+						if symbol == '[' {
+							nestDepth++
+						} else if symbol == ']' {
+							nestDepth--
+						}
 					}
-					// account for increment at end of the loop
 					instructionPtr--
 				}
-			case ']': // If the value at the current cell is zero, move to the next instruction.
-				if memory[dataPtr] != 0 {
-					for program[instructionPtr] != '[' {
+
+			case ']': // If the value at the current cell is zero, move to the next instruction
+				// Otherwise, move backwards in the instructions to the corresponding [ .
+				value := memory[dataPtr]
+				if value != 0 {
+					nestDepth := 1
+					for nestDepth > 0 {
 						instructionPtr--
+						symbol := program[instructionPtr]
+						if symbol == ']' {
+							nestDepth++
+						} else if symbol == '[' {
+							nestDepth--
+						}
 					}
+					instructionPtr--
 				}
 			}
-
 			instructionPtr++
 		}
 	}()
