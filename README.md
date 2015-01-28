@@ -14,6 +14,7 @@ This also works with `go test ./vm`
 
 ## How to use
 
+In your own source
 ``` go
 import (
   "fmt"
@@ -32,21 +33,15 @@ You can use `go install` and use the CLI like so:
 
 ``` sh
  $ gofuck <file>
-```
-or
 
-``` sh
  $ gofuck
  $ <type or paste BF code here>
 ```
 
 And for something pretty cool:
 ``` sh
- $ gofuck mandelbrot.b
+ $ gofuck examples/mandelbrot.b
 ```
-
-
-For something really cool, try out:
 
 ## Contributing changes
 

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/adamveld12/gofuck/vm"
 	"io/ioutil"
-	"log"
 	"os"
 )
 
@@ -16,7 +15,7 @@ func main() {
 		reader := bufio.NewReader(os.Stdin)
 		line, _, err := reader.ReadLine()
 		if err != nil {
-			log.Fatal(err.Error())
+			panic(err.Error())
 		}
 		program = string(line)
 	} else {
@@ -26,6 +25,8 @@ func main() {
 	input, output := vm.Execute(program)
 	go reader(input)
 	printer(output)
+
+	fmt.Println()
 }
 
 func reader(input chan<- rune) {
@@ -42,7 +43,12 @@ func reader(input chan<- rune) {
 
 func printer(output <-chan rune) {
 	for {
-		fmt.Print(string(<-output))
+		output, ok := <-output
+		if ok {
+			fmt.Print(string(output))
+		} else {
+			break
+		}
 	}
 }
 
